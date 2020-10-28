@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.2.0" camunda:diagramRelationId="ebb6b565-acae-4176-b8ab-284b41dfdcfb">
+  <bpmn:collaboration id="Costumes">
+    <bpmn:participant id="Participant_1ex575a" processRef="costumes" />
+  </bpmn:collaboration>
+  <bpmn:process id="costumes" name="costumes" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start Process">
+      <bpmn:outgoing>Flow_1ehao1v</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="rateChoices">
+      <bpmn:incoming>Flow_0oyjmi8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gl7ced</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0ln5uro</bpmn:outgoing>
+      <bpmn:outgoing>Flow_01jqs1d</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="rateCostume" name="Rate Costume">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="newCostume" label="Click to see Costume" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="candyPieces" label="Current Pieces of Candy" type="long">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="costumeRating" label="Rate the Costume:" type="enum" defaultValue="ok">
+            <camunda:value id="bad" name="Terrible" />
+            <camunda:value id="ok" name="Not too bad" />
+            <camunda:value id="great" name="Great Costume" />
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ut3im5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oyjmi8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1l7fdby">
+      <bpmn:incoming>Flow_0mfmf7y</bpmn:incoming>
+      <bpmn:outgoing>little</bpmn:outgoing>
+      <bpmn:outgoing>kid</bpmn:outgoing>
+      <bpmn:outgoing>over15</bpmn:outgoing>
+      <bpmn:outgoing>tween</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="candyCollector2">
+      <bpmn:incoming>Flow_04hmly0</bpmn:incoming>
+      <bpmn:incoming>Flow_1fzw7zf</bpmn:incoming>
+      <bpmn:incoming>Flow_1s04nf0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1uymoyu</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="dispense_candy" name="Dispense Candy via MQTT" camunda:type="external" camunda:topic="costumes">
+      <bpmn:incoming>Flow_1uymoyu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1387oi5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="endProcess" name="End">
+      <bpmn:incoming>Flow_1387oi5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="candyCollector1">
+      <bpmn:incoming>Flow_092zthw</bpmn:incoming>
+      <bpmn:incoming>Flow_00nf1at</bpmn:incoming>
+      <bpmn:incoming>Flow_0ap8qrm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lrkui3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="noCandy" name="No Candy!">
+      <bpmn:incoming>noCostume</bpmn:incoming>
+      <bpmn:incoming>over15</bpmn:incoming>
+      <bpmn:outgoing>Flow_09g8ps9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1ehao1v" sourceRef="StartEvent_1" targetRef="eval_pic" />
+    <bpmn:sequenceFlow id="Flow_1ue2gbl" sourceRef="eval_pic" targetRef="Gateway_0t1k1ll" />
+    <bpmn:sequenceFlow id="hasCostume" name="Wearing Costume" sourceRef="Gateway_0t1k1ll" targetRef="addCandy1">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{isCostume==true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="noCostume" name="No Costume" sourceRef="Gateway_0t1k1ll" targetRef="noCandy" />
+    <bpmn:sequenceFlow id="Flow_09g8ps9" sourceRef="noCandy" targetRef="EndNoCandy" />
+    <bpmn:sequenceFlow id="little" name="&#60;= 5yo" sourceRef="Gateway_1l7fdby" targetRef="littles">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{age == 'little'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="kid" name="6-10yo" sourceRef="Gateway_1l7fdby" targetRef="kids">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{age == 'kid'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="over15" name="&#62; 15yo" sourceRef="Gateway_1l7fdby" targetRef="noCandy">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{age=='tooOld'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1gl7ced" name="Terrible Costume" sourceRef="rateChoices" targetRef="badCostume">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{costumeRating=='bad'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0ln5uro" name="ok costume" sourceRef="rateChoices" targetRef="okCostume">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{costumeRating=='ok'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0oyjmi8" sourceRef="rateCostume" targetRef="rateChoices" />
+    <bpmn:sequenceFlow id="Flow_01jqs1d" name="Great Costume" sourceRef="rateChoices" targetRef="greatCostume">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{costumeRating=='great'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_092zthw" sourceRef="badCostume" targetRef="candyCollector1" />
+    <bpmn:sequenceFlow id="Flow_00nf1at" sourceRef="okCostume" targetRef="candyCollector1" />
+    <bpmn:sequenceFlow id="Flow_0ap8qrm" sourceRef="greatCostume" targetRef="candyCollector1" />
+    <bpmn:sequenceFlow id="Flow_0ut3im5" sourceRef="addCandy1" targetRef="rateCostume" />
+    <bpmn:sequenceFlow id="Flow_1lrkui3" sourceRef="candyCollector1" targetRef="estimateAge" />
+    <bpmn:sequenceFlow id="tween" name="11 - 15 yo" sourceRef="Gateway_1l7fdby" targetRef="tweens">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{age=='tween'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_04hmly0" sourceRef="kids" targetRef="candyCollector2" />
+    <bpmn:sequenceFlow id="Flow_1fzw7zf" sourceRef="littles" targetRef="candyCollector2" />
+    <bpmn:sequenceFlow id="Flow_1s04nf0" sourceRef="tweens" targetRef="candyCollector2" />
+    <bpmn:sequenceFlow id="Flow_1uymoyu" sourceRef="candyCollector2" targetRef="dispense_candy" />
+    <bpmn:sequenceFlow id="Flow_1387oi5" sourceRef="dispense_candy" targetRef="endProcess" />
+    <bpmn:sequenceFlow id="Flow_0mfmf7y" sourceRef="estimateAge" targetRef="Gateway_1l7fdby" />
+    <bpmn:scriptTask id="addCandy1" name="Add 1" scriptFormat="javascript" camunda:resultVariable="candy">
+      <bpmn:incoming>hasCostume</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ut3im5</bpmn:outgoing>
+      <bpmn:script>var candy = execution.getVariable('candyPieces');
+if(candy == null){
+   candy = 0;
+}
+candy += 1;
+execution.setVariable('candyPieces', candy);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="badCostume" name="Add 0" scriptFormat="javascript">
+      <bpmn:incoming>Flow_1gl7ced</bpmn:incoming>
+      <bpmn:outgoing>Flow_092zthw</bpmn:outgoing>
+      <bpmn:script>var candy = execution.getVariable('candyPieces');
+if(candy == null){
+   candy = 0;
+}
+candy += 0;
+execution.setVariable('candyPieces', candy);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="okCostume" name="Add 1" scriptFormat="javascript">
+      <bpmn:incoming>Flow_0ln5uro</bpmn:incoming>
+      <bpmn:outgoing>Flow_00nf1at</bpmn:outgoing>
+      <bpmn:script>var candy = execution.getVariable('candyPieces');
+if(candy == null){
+   candy = 0;
+}
+candy += 1;
+execution.setVariable('candyPieces', candy);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="greatCostume" name="Add 2" scriptFormat="javascript">
+      <bpmn:incoming>Flow_01jqs1d</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ap8qrm</bpmn:outgoing>
+      <bpmn:script>var candy = execution.getVariable('candyPieces');
+if(candy == null){
+   candy = 0;
+}
+candy += 2;
+execution.setVariable('candyPieces', candy);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="littles" name="Add 2" scriptFormat="javascript">
+      <bpmn:incoming>little</bpmn:incoming>
+      <bpmn:outgoing>Flow_1fzw7zf</bpmn:outgoing>
+      <bpmn:script>var candy = execution.getVariable('candyPieces');
+if(candy == null){
+   candy = 0;
+}
+candy += 2;
+execution.setVariable('candyPieces', candy);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="kids" name="Add 1" scriptFormat="javascript">
+      <bpmn:incoming>kid</bpmn:incoming>
+      <bpmn:outgoing>Flow_04hmly0</bpmn:outgoing>
+      <bpmn:script>var candy = execution.getVariable('candyPieces');
+if(candy == null){
+   candy = 0;
+}
+candy += 1;
+execution.setVariable('candyPieces', candy);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="tweens" name="Add 0" scriptFormat="javascript">
+      <bpmn:incoming>tween</bpmn:incoming>
+      <bpmn:outgoing>Flow_1s04nf0</bpmn:outgoing>
+      <bpmn:script>var candy = execution.getVariable('candyPieces');
+if(candy == null){
+   candy = 0;
+}
+candy += 0;
+execution.setVariable('candyPieces', candy);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="eval_pic" name="Evaluate Picture">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="isCostume" label="Wearing a Costume?" type="boolean" />
+          <camunda:formField id="newCostume" label="Click to see Costume" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ehao1v</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ue2gbl</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0t1k1ll" default="noCostume">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="isCostume" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ue2gbl</bpmn:incoming>
+      <bpmn:outgoing>hasCostume</bpmn:outgoing>
+      <bpmn:outgoing>noCostume</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="EndNoCandy" name="End Evaluation">
+      <bpmn:incoming>Flow_09g8ps9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="estimateAge" name="Estimate Age">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="newCostume" label="Click to See Costume" type="string" />
+          <camunda:formField id="age" label="Estimate Age" type="enum">
+            <camunda:value id="little" name="5 Years Old and Under" />
+            <camunda:value id="kid" name="6 to 10 Years Old" />
+            <camunda:value id="tween" name="11 to 15 Years Old" />
+            <camunda:value id="tooOld" name="Over 15 Years Old" />
+          </camunda:formField>
+          <camunda:formField id="candyPieces" label="Current Candy" type="long">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1lrkui3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mfmf7y</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Costumes">
+      <bpmndi:BPMNShape id="Participant_1ex575a_di" bpmnElement="Participant_1ex575a" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2110" height="640" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ehao1v_di" bpmnElement="Flow_1ehao1v">
+        <di:waypoint x="248" y="360" />
+        <di:waypoint x="370" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ue2gbl_di" bpmnElement="Flow_1ue2gbl">
+        <di:waypoint x="470" y="360" />
+        <di:waypoint x="555" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08ih52t_di" bpmnElement="hasCostume">
+        <di:waypoint x="605" y="360" />
+        <di:waypoint x="750" y="360" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="632" y="342" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0phyrcs_di" bpmnElement="noCostume">
+        <di:waypoint x="580" y="385" />
+        <di:waypoint x="580" y="640" />
+        <di:waypoint x="1580" y="640" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1029" y="623" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09g8ps9_di" bpmnElement="Flow_09g8ps9">
+        <di:waypoint x="1680" y="640" />
+        <di:waypoint x="2192" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10hukjv_di" bpmnElement="little">
+        <di:waypoint x="1630" y="335" />
+        <di:waypoint x="1630" y="140" />
+        <di:waypoint x="1730" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1653" y="123" width="34" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cvwenl_di" bpmnElement="kid">
+        <di:waypoint x="1630" y="335" />
+        <di:waypoint x="1630" y="250" />
+        <di:waypoint x="1730" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1660" y="233" width="34" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jfrs77_di" bpmnElement="over15">
+        <di:waypoint x="1630" y="385" />
+        <di:waypoint x="1630" y="600" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1643" y="493" width="34" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gl7ced_di" bpmnElement="Flow_1gl7ced">
+        <di:waypoint x="1070" y="335" />
+        <di:waypoint x="1070" y="250" />
+        <di:waypoint x="1200" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1064" y="233" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ln5uro_di" bpmnElement="Flow_0ln5uro">
+        <di:waypoint x="1095" y="360" />
+        <di:waypoint x="1200" y="360" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1100" y="342" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oyjmi8_di" bpmnElement="Flow_0oyjmi8">
+        <di:waypoint x="1000" y="360" />
+        <di:waypoint x="1045" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01jqs1d_di" bpmnElement="Flow_01jqs1d">
+        <di:waypoint x="1070" y="385" />
+        <di:waypoint x="1070" y="470" />
+        <di:waypoint x="1200" y="470" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1077" y="453" width="75" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_092zthw_di" bpmnElement="Flow_092zthw">
+        <di:waypoint x="1300" y="250" />
+        <di:waypoint x="1360" y="250" />
+        <di:waypoint x="1360" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00nf1at_di" bpmnElement="Flow_00nf1at">
+        <di:waypoint x="1300" y="360" />
+        <di:waypoint x="1335" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ap8qrm_di" bpmnElement="Flow_0ap8qrm">
+        <di:waypoint x="1300" y="470" />
+        <di:waypoint x="1360" y="470" />
+        <di:waypoint x="1360" y="385" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ut3im5_di" bpmnElement="Flow_0ut3im5">
+        <di:waypoint x="850" y="360" />
+        <di:waypoint x="900" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lrkui3_di" bpmnElement="Flow_1lrkui3">
+        <di:waypoint x="1385" y="360" />
+        <di:waypoint x="1440" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mqluor_di" bpmnElement="tween">
+        <di:waypoint x="1655" y="360" />
+        <di:waypoint x="1730" y="360" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1668" y="342" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04hmly0_di" bpmnElement="Flow_04hmly0">
+        <di:waypoint x="1830" y="250" />
+        <di:waypoint x="1920" y="250" />
+        <di:waypoint x="1920" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fzw7zf_di" bpmnElement="Flow_1fzw7zf">
+        <di:waypoint x="1830" y="140" />
+        <di:waypoint x="1920" y="140" />
+        <di:waypoint x="1920" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s04nf0_di" bpmnElement="Flow_1s04nf0">
+        <di:waypoint x="1830" y="360" />
+        <di:waypoint x="1895" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1uymoyu_di" bpmnElement="Flow_1uymoyu">
+        <di:waypoint x="1945" y="360" />
+        <di:waypoint x="1980" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1387oi5_di" bpmnElement="Flow_1387oi5">
+        <di:waypoint x="2080" y="360" />
+        <di:waypoint x="2192" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mfmf7y_di" bpmnElement="Flow_0mfmf7y">
+        <di:waypoint x="1540" y="360" />
+        <di:waypoint x="1605" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="212" y="342" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="197" y="385" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_06fgcgu_di" bpmnElement="rateChoices" isMarkerVisible="true">
+        <dc:Bounds x="1045" y="335" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xn7vb2_di" bpmnElement="rateCostume">
+        <dc:Bounds x="900" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1l7fdby_di" bpmnElement="Gateway_1l7fdby" isMarkerVisible="true">
+        <dc:Bounds x="1605" y="335" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0o51yhn_di" bpmnElement="candyCollector2" isMarkerVisible="true">
+        <dc:Bounds x="1895" y="335" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qjaiol_di" bpmnElement="dispense_candy">
+        <dc:Bounds x="1980" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11jw1kw_di" bpmnElement="endProcess">
+        <dc:Bounds x="2192" y="342" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2201" y="385" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_16heu75_di" bpmnElement="candyCollector1" isMarkerVisible="true">
+        <dc:Bounds x="1335" y="335" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0o9vx0x_di" bpmnElement="noCandy">
+        <dc:Bounds x="1580" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r3ttiv_di" bpmnElement="addCandy1">
+        <dc:Bounds x="750" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_169cjq4_di" bpmnElement="badCostume">
+        <dc:Bounds x="1200" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ta8pzm_di" bpmnElement="okCostume">
+        <dc:Bounds x="1200" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cs85dv_di" bpmnElement="greatCostume">
+        <dc:Bounds x="1200" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1k3h9c1_di" bpmnElement="littles">
+        <dc:Bounds x="1730" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yhupyf_di" bpmnElement="kids">
+        <dc:Bounds x="1730" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vxdsse_di" bpmnElement="tweens">
+        <dc:Bounds x="1730" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rz51fp_di" bpmnElement="eval_pic">
+        <dc:Bounds x="370" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0t1k1ll_di" bpmnElement="Gateway_0t1k1ll" isMarkerVisible="true">
+        <dc:Bounds x="555" y="335" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0uh1nte_di" bpmnElement="EndNoCandy">
+        <dc:Bounds x="2192" y="622" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2174" y="665" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02sjn8a_di" bpmnElement="estimateAge">
+        <dc:Bounds x="1440" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
