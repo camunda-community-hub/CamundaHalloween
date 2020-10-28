@@ -21,7 +21,7 @@ collaborators!). Then, once I had the basic overall structure down, I moved it a
 to Camunda Modeler to flesh out the details of the process. This process of defining each
 step in the process was very helpful in designing _all_ of the various parts.
 
-So, here's the overall model I came up with:
+So, here's the overall model I came up with (you can get the [complete file](Modeler/costume.bpmn) too):
 
 ![Halloween Candy Model](images/costumeBPM.png)
 
@@ -317,6 +317,6 @@ very real need.
 
 So while I may have proven that BPMN and IoT can go together in the very dumbest way
 possible, it was a super fun project, and I hope it gets you thinking about other
-possibilities either for you IoT project, or for your BPMN processes. 
+possibilities either for you IoT project, or for your BPMN processes.
 
 
