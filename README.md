@@ -76,6 +76,15 @@ All of these files are in the `DispenserFiles` sub-directory. Happy printing!\
 Depending on what motor you use to drive the screw, you _may_ have to customize the
 hole just a bit to make the shaft fit.
 
+Here's what the inside of the Dispenser looks like. You can see that it uses a screw-mechanism
+to push candy along the tube.
+
+![Inside the Candy Dispenser](images/DispenserInt.png)
+
+And when the whole thing is assembled and ready to dispense candy.
+
+![The completed candy dispenser](images/treatDispenser.png)
+
 ## The Hardware
 
 I probably over-engineered this just a bit. :-) But there are essentially 2 different hardware builds here:
@@ -96,6 +105,10 @@ or the camera, don't come up correctly.
 Here's how I wired it all up:
 
 ![Board Layout](images/DoorbellCam.png)
+
+And here's what the final product looks like:
+
+![Final Camera Board](images/FinalCam.png)
 
 My LEDs needed 100-Ohm resistors in order for them to get bright enough.
 The doorbell has a 220-Ohm resistor on it. That's really all there is to it
@@ -122,6 +135,10 @@ One part that is _not_ shown is the [boost step-up regulator](https://www.pololu
 from 3.3V to 12V
 
 ![Treat Dispenser Wiring](images/treatDispenser.png)
+
+And here's what that board looked like in it's final form:
+
+![Treat Dispenser Final Circuit](images/TreatCircuitFinal.png)
 
 Finally you'll need the code for the [Candy Dispenser](CandyDispenser/CandyDispenser.ino). Once again,
 you'll need to make sure you set the address for your MQTT Broker (line `15`), your
