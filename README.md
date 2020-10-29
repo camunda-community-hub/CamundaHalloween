@@ -12,11 +12,11 @@ I'll break this post up into several sections, but you will need (or at least ne
 ## Overview
 
 This is both a hardware and a software, as well as a BPMN, project, so there
-are a lot of moving parts -- literally and figuratively.
+are a lot of moving parts -- both literally and figuratively.
 
 The first thing I had to do was figure out what all those parts would be, and to map it all out.
-Luckily, I had [Cawemo](https://www.https://cawemo.com)to get me started. I mapped out all the various parts of the
-process there, and asked for feedback (because I could share the Cawemo model with some
+
+Luckily, I had [Cawemo](https://www.https://cawemo.com) to get me started. I mapped out all the various parts of the process there, and asked for feedback (because I could share the Cawemo model with some
 collaborators!). Then, once I had the basic overall structure down, I moved it all over
 to Camunda Modeler to flesh out the details of the process. This process of defining each
 step in the process was very helpful in designing _all_ of the various parts.
@@ -28,43 +28,43 @@ So, here's the overall model I came up with (you can get the [complete file](Mod
 There are some areas where I could simplify things, of course, but this is, after all,
 basically a [Rube Goldberg](https://en.wikipedia.org/wiki/Rube_Goldberg_machine) project of sorts,
 so simplification wasn't really the goal. The basic steps are:
-1. Trick-or-Treater rings doorbell
-2. Camera takes a picture of the Trick-or-Treater and sends it to a server
+1. Trick or Treater rings doorbell
+2. Camera takes a picture of the Trick or Treater and sends it so a server
 3. User evaluates the picture to determine if the person is wearing a costume
    1. If they are not, they get no candy and the process ends
 4. If they are, a piece of candy is added to their virtual candy bag
 5. The picture is then evaluated a second time to judge the costume
-   1. If the costume is really great, two pieces of candy are added to the virtual candy bag
-   2. If the costume is just 'ok' one piece of candy is added
+   1. If the costume is really great, 2 pieces of candy are added to the virtual candy bag
+   2. If the costume is just 'ok' 1 piece of candy is added
    3. If the costume is terrible, no additional candy is added
-6. The picture is then evaluated a third time where the age of the Trick-or-Treater is determined
-   1. If the Trick-or-Treater is 5-years-old or under, they get two additional pieces of candy because little kids in cute costumes are the best
+6. The picture is then evaluated a 3rd time where the age of the Trick or Treater is determined
+   1. If the Trick or Treater is 5 years old or under, they get 2 additional pieces of candy because little kids in cute costumes are the best
    2. If they are 6-10 years old, they get one additional piece of candy added
    3. If they are 11-15 years old, no additional candy is added
    4. If they are 15 years old or older, no candy will be dispensed and the process ends
-7. All the candy is added up and sent to the automatic Candy Dispenser where the right number of pieces of candy are given out
+7. All the candy is added up, and is sent to the automatic Candy Dispenser where the right number of pieces of candy are given out
 
-Could I have made Halloween candy giving any more complicated? Probably. But I decided not to.
+Could I have made Halloween candy giving any more complicated? Probably, but I decided not to.
 
-So there you have the overall layout. Next I needed to build the two pieces of hardware that
+So there you have the overall layout. Next I needed to build the 2 pieces of hardware that
 would allow me to make this dream come true. I needed a doorbell camera, and a treat dispenser.
 
-For those things, I needed to build some custom hardware, and then 3-D print some custom pieces
+For those things, I would need to build some custom hardware, and then 3-D print some custom pieces
 to make it all come together.
 
 I also had to write a small server process to take the pictures in from the Camera, and then
 submit them to the Camunda Engine, as well as an external command that the Camunda Engine
-could call at the end, which would start the candy being dispensed. I'll cover each of these
+could call at the end which would start the candy being dispensed. I'll cover each of these
 areas in its own section.
 
 ## 3-D Printing
 
-With my printer, the printing took the better part of four days, so be prepared for some long days
-watching your printer! I only printed the following parts from the included model:
-* `treat-spout.stl` -- the spout where the treats come out!
-* `hopper.stl` -- the hopper to hold your candy reserves
-* `Screwll.stl` -- the screw that turns to dispense candy
-* `feeder-tube.stl` -- the tube that the screw goes in
+With my printer, the printing took the better part of 4 days, so be prepared for some long days
+watching your printer. I only printed the following parts from the included model:
+* `treat-spout.stl` -- the spout out of which come the treats!
+* `hopper.stl` -- The hopper to hold your candy reserves
+* `Screwll.stl` -- The screw that turns to dispense candy
+* `feeder-tube.stl` -- The tube that the screw goes in
 * `Hopper-lid.stl` -- the lid for the hopper
 
 In addition, I did design and print one piece: `TreatHolder.stl` Since I didn't use a
@@ -87,11 +87,11 @@ And when the whole thing is assembled and ready to dispense candy.
 
 ## The Hardware
 
-I probably over-engineered this just a bit. :-) But there are essentially two different hardware builds here:
+I probably over-engineered this just a bit. :-) But there are essentially 2 different hardware builds here:
 * Camera and Doorbell
 * Treat Dispenser
 
-I'll cover each of these separately, but none of the parts are hard to come by, and most,
+I'll cover each of these separately but none of the parts are hard to come by, and most,
 if not all, should be available from [Adafruit](https://adafruit.com).
 
 ### The Camera and Doorbell
@@ -99,8 +99,7 @@ if not all, should be available from [Adafruit](https://adafruit.com).
 The camera and doorbell is based on the `ESP32-Cam` board which is a small, super cheap
 board that has a fairly high quality camera on it. It's about 1" square (that's 2.5cm for those outside the US!)
 and has an SD Card slot on it as well as a very bright flash. In addition, I added a momentary switch
-(as the 'doorbell') and two LEDs -- a Green and a Red -- as status LEDs in case the board,
-or the camera, don't come up correctly.
+(as the 'doorbell') and two LEDs -- a Green and a Red -- as status LEDs in case the board, or the camera, don't come up correctly.
 
 Here's how I wired it all up:
 
@@ -136,7 +135,7 @@ from 3.3V to 12V
 
 ![Treat Dispenser Wiring](images/treatDispenser.png)
 
-And here's what that board looked like in its final form:
+And here's what that board looked like in it's final form:
 
 ![Treat Dispenser Final Circuit](images/TreatCircuitFinal.png)
 
@@ -147,8 +146,8 @@ WiFi access point and password (lines `24` & `25`).
 ## The Software
 
 Now that you have all the hardware built and deployed, you need the software to pull it
-all together and make it work. As mentioned before, when the 'doorbell' is pressed,
-the Camera snaps a picture, stores it locally, and then sends it out. But where does it
+all together and make it all work. As mentioned before, when the 'doorbell' is pressed,
+the Camera snaps a picture, stores in locally, and then sends it out. But where does it
 send it?
 
 ### The Server Software
@@ -189,19 +188,19 @@ func sendPic(s string) {
 	}
 }
 ```
-Notice that I'm setting all three process variables that I'll need throughout the entire
-process here at the beginning. This was important for the `candyPieces` variable especially, 
+Notice that I'm setting all 3 process variables that I'll need throughout the entire
+process here at the beginning. This was important for the `candyPieces` variable especially
 since I found that if I tried to set it later on during the processs, it was defined as a
 `double` and not a `long` which caused things not to work.
 
 All of the code for the server process is included in [this project](GoServer/server.go) so
 all you should have to do is run that file with the command `go run goserver.go` and you'll have
-a webserver ready to take in pictures and start a Camunda Task in the Candy Dispenser!
+a webserver ready to take in pictures and start a Camunda Task in the Cnady Dispenser!
 
 ### The Task Handler
 
 This was the other piece I had to write: Something to handle the final task of dispensing
-the right number of pieces of candy at the end. For this, I used Node.js, and the code
+the right number of pieces of candy at the end. For this, I did use Node.js, and the code
 was just as simple:
 
 ```javascript
@@ -239,11 +238,11 @@ $ node worker.js
 
 ## The Camunda Code
 
-So now you should have a server process to take in the pictures and initiate a task,
+So now you should have a server process to take in the pictures, and initiate a task,
 and a service task worker to handle dispensing the code as the final task. It's time
 to fill out all the parts of the model itself to make it fully functioning.
 
-For the `Evaluate Picture` User Task, I created a form with two fields based on the
+For the `Evaluate Picture` User Task, I created a form with 2 fields based on the
 incoming task variables `isCostume` and `newCostume`.
 
 ![isCostume](images/isCostume.png)
@@ -288,7 +287,7 @@ After this I needed to add more candy to the count (maybe, unless they had a
 terrible costume) so I re-used the javascript code from the first Script Task for
 all of the rest of them, just adjusting the amount (if any) of candy to be added.
 
-And finally we estimate the Trick-or-Treater's age:
+And finally we estimate the Child's age:
 
 ![Age Estimation Form](images/ageEstimate.png)
 
@@ -323,11 +322,11 @@ Success!!
 I was asked more than a few times how BPMN and IoT could ever be a 'thing' together,
 and I was fully prepared for the answer to be "it can't".
 
-But then I got to thinking about it -- there are actually thousands of ways in
+But then I got to thinking about it and there are actually thousands of ways in
 which IoT data from sensors, etc. can be key pieces of data in a business decision-making
 process.
 
-In addition, having the ultimate outcome of a business-decision-making process be something
+In addition, having the ultimate outcome of a business decision making process be something
 that is then carried out in the physical world -- maybe it's a treat dispenser, but
 maybe it's a warehouse robot that is tasked to go collect and process an order -- is a
 very real need.
