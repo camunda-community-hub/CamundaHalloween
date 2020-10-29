@@ -15,8 +15,8 @@ This is both a hardware and a software, as well as a BPMN, project, so there
 are a lot of moving parts -- both literally and figuratively.
 
 The first thing I had to do was figure out what all those parts would be, and to map it all out.
-Luckily, I had Cawemo to get me started! I mapped out all the various parts of the
-process there, and asked for feedback (because I could share the Cawemo model with some
+
+Luckily, I had [Cawemo](https://www.https://cawemo.com) to get me started. I mapped out all the various parts of the process there, and asked for feedback (because I could share the Cawemo model with some
 collaborators!). Then, once I had the basic overall structure down, I moved it all over
 to Camunda Modeler to flesh out the details of the process. This process of defining each
 step in the process was very helpful in designing _all_ of the various parts.
@@ -97,10 +97,9 @@ if not all, should be available from [Adafruit](https://adafruit.com).
 ### The Camera and Doorbell
 
 The camera and doorbell is based on the `ESP32-Cam` board which is a small, super cheap
-board that has a fairly high quality camera on it. It's about 1" square, and has an SD
-Card slot on it as well as a very bright flash. In addition, I added a momentary switch
-(as the 'doorbell') and 2 LEDs -- a Green and a Red -- as status LEDs in case the board,
-or the camera, don't come up correctly.
+board that has a fairly high quality camera on it. It's about 1" square (that's 2.5cm for those outside the US!)
+and has an SD Card slot on it as well as a very bright flash. In addition, I added a momentary switch
+(as the 'doorbell') and two LEDs -- a Green and a Red -- as status LEDs in case the board, or the camera, don't come up correctly.
 
 Here's how I wired it all up:
 
