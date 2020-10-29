@@ -83,7 +83,7 @@ to push candy along the tube.
 
 And when the whole thing is assembled and ready to dispense candy.
 
-![The completed candy dispenser](images/treatDispenser.png)
+![The completed candy dispenser](images/DispenserFinal.png)
 
 ## The Hardware
 
