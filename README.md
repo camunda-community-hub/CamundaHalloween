@@ -15,7 +15,7 @@ This is both a hardware and a software, as well as a BPMN, project, so there
 are a lot of moving parts -- literally and figuratively.
 
 The first thing I had to do was figure out what all those parts would be, and to map it all out.
-Luckily, I had [Cawemo](https://www.https://cawemo.com)to get me started. I mapped out all the various parts of the
+Luckily, I had [Cawemo](https://www.https://cawemo.com) to get me started. I mapped out all the various parts of the
 process there, and asked for feedback (because I could share the Cawemo model with some
 collaborators!). Then, once I had the basic overall structure down, I moved it all over
 to Camunda Modeler to flesh out the details of the process. This process of defining each
@@ -38,7 +38,7 @@ so simplification wasn't really the goal. The basic steps are:
    2. If the costume is just 'ok' one piece of candy is added
    3. If the costume is terrible, no additional candy is added
 6. The picture is then evaluated a third time where the age of the Trick-or-Treater is determined
-   1. If the Trick-or-Treater is 5-years-old or under, they get two additional pieces of candy because little kids in cute costumes are the best
+   1. If the Trick-or-Treater is 5 years old or under, they get two additional pieces of candy because little kids in cute costumes are the best
    2. If they are 6-10 years old, they get one additional piece of candy added
    3. If they are 11-15 years old, no additional candy is added
    4. If they are 15 years old or older, no candy will be dispensed and the process ends
