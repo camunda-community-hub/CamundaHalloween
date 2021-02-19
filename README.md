@@ -1,3 +1,5 @@
+<img src="https://img.shields.io/badge/Camunda%20DevRel%20Project-Created%20by%20the%20Camunda%20Developer%20Relations%20team-0Ba7B9">
+
 # CamundaHalloween
 
 It's a very Camunda Halloween, and this project should keep you safe from the
