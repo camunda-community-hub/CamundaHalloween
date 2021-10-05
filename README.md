@@ -5,11 +5,11 @@
 It's a very Camunda Halloween, and this project should keep you safe from the
 Trick-or-Treaters!
 
-It's more than just a BPM process, of course. It's an IoT project that uses
+It's more than just a BPM process, of course. It's an IOT project that uses
 Camunda BPM to deliver the goods.
 
 
-I'll break this post up into several sections, but you will need (or at least need access to) a 3-D printer to fully realize the awesomness here. It uses a modified Dog Treat Dispenser because I didn't have the time (or the skills) to design a whole new Candy Dispenser from scratch.
+I'll break this post up into several sections, but you will need (or at least need access to) a 3-D printer to fully feel the awesomness here. It uses a modified Dog Treat Dispenser because I didn't have the time (or the skills) to design a whole new Candy Dispenser from scratch.
 
 ## Overview
 
